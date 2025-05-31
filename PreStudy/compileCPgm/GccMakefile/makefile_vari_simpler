@@ -1,0 +1,13 @@
+OBJ = hello.o calc.o
+
+main: $(OBJ)
+	gcc -Wall  $(OBJ) -o main
+
+hello.o : hello.c
+	gcc -Wall -c hello.c 
+
+calc.o: calc.c
+	gcc -Wall -c calc.c
+
+clean:
+	rm $(OBJ) main

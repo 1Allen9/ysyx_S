@@ -1,0 +1,64 @@
+#.PYONY clean
+#hello:
+#	echo "hello world, by makefile"
+#	echo "This line will print if the file hello does not exist."
+
+# quick make example
+#hello: hello.c
+#	cc hello.c -o hello
+
+#### use variables ####
+#TARGET := hello
+
+#### more quick example ######
+#hello : hello.o
+#	cc hello.o -o hello # runs third
+#
+#hello.o: hello.c
+#	cc -c hello.c -o hello.o # rucs second
+#
+##Typically hello.c would already exist, but I want to limit any additional required files
+#message:
+#	echo "I gonna not follow this line"
+
+files := file1 file2
+some_fil: $(files)
+	echo "look at this variables: " $(files)
+	touch some_file
+
+file1:
+	touch file1
+
+file2 : 
+	touch file2
+
+# x := dude 2233
+# a := one two
+# b := 'one two'
+target := one two three
+all: one two three
+$(target):
+	echo $@
+# all: $(target)
+# one: 
+# 	touch one
+# 
+# two:
+# 	touch two
+# 
+# three:
+# 	touch three
+# 
+	#printf $(a)
+	#printf $(b)
+	#printf $(x)
+	#echo $(a)
+	#echo $(b)
+	#echo $(x)
+	#echo ${x}
+
+
+#### make clean		####
+clean:
+	# rm -f *.o file* some_file
+	rm $(target)

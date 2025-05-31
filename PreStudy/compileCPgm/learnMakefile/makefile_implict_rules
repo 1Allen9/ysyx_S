@@ -1,0 +1,13 @@
+CC = gcc # Flag for implict rules
+CFLAGS = -g # Flag for implict rules. Turn on debug info
+
+# Implict rule #1: blah is bulit via the C linker implict rule
+# Implict rule #2: blah.o is built via C compilation implict rule, because blah.c exists
+
+blah: blah.o
+
+blah.c:
+	echo "int main() { return 0;}" > blah.c
+
+clean:
+	rm -f blah*

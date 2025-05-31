@@ -1,0 +1,20 @@
+oneword = one$ word
+var := one$\
+	   word
+x = foo
+y = $(x) bar
+x = later
+#x := foo
+#y := $(x) bar
+#x := later
+comm_test = str\#ing
+comm_test2 = str#ing \
+			 multi-line
+simply_expand:
+	echo "x is $(x), y is $(y)"
+	echo $(comm_test)
+	echo $(comm_test2)
+
+long_line:
+	echo $(var)
+	echo $(oneword)

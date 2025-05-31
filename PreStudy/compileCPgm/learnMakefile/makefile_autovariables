@@ -1,0 +1,24 @@
+# target := one two three
+# print: $(wildcard *.c)
+# 	ls -la $?
+# all: $(target)
+# 
+# $(target):
+# 	echo $@
+
+
+hey: one two
+	echo $@
+	echo $? #outputs all prerequisites newer than the target
+	echo $^
+	echo $<
+	touch hey
+
+one:
+	touch one
+
+two:
+	touch two
+
+clean:
+	rm -f hey one two

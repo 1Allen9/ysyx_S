@@ -1,0 +1,13 @@
+main: hello.o calc.o
+	gcc -Wall hello.o calc.o -o main
+
+hello.o: hello.c 
+	gcc -Wall -c hello.c 
+
+calc.o: calc.c calc.h
+	gcc -Wall -c calc.c
+
+
+
+clean:
+	rm *.o main
