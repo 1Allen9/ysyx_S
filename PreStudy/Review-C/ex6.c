@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	char empty_c[] = "";
 
 	printf("You are %03d miles away.\n", distance);
-	printf("You are %#3d miles away.\n", distance);
+	printf("You are %*3d miles away.\n", distance);
 	printf("You are %x miles away.(hex)\n", distance);
 	printf("You are 0x%05X miles away.(hex)\n", distance);
 	printf("You are %o miles away.(Oct)\n", distance);
