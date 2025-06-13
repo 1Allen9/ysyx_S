@@ -2,56 +2,45 @@
 
 int main(int argc, char *argv[])
 {
-	if(argc != 2)
-	{
-		printf("ERROR: You need one argument.\n");
-		// this is how you abort a program
-		return 1;
-	}
-
+	int arg_cnt = 0;
 	int i = 0;
-	for(i = 0; argv[1][i] != '\0'; i++)
+	for(arg_cnt = 1; arg_cnt < argc; arg_cnt++)
 	{
-		char letter = argv[1][i];
-
-		switch(letter)
+		char letter;
+		printf("==== The NO.%d arg is %s\n", arg_cnt, argv[arg_cnt]);
+		for(i = 0, letter = argv[arg_cnt][i]; argv[arg_cnt][i] != '\0'; i++)
 		{
-			case 'a':
-			case 'A':
-				printf("%d: 'A'\n", i);
-				break;
+			letter = argv[arg_cnt][i];
 
-			case 'e':
-			case 'E':
-				printf("%d: 'E'\n", i);
-				break;
+			switch(letter)
+			{
+				case 'a':
+				case 'e':
+				case 'i':
+				case 'o':
+				case 'u':
+					printf("%d: %c\n", i, letter - 32);
+					break;
+				case 'A':
+				case 'E':
+				case 'I':
+				case 'O':
+				case 'U':
+					printf("%d: '%c'\n", i, letter);
+					break;
+				case 'y': letter -= 32;
+    	        case 'Y':
+    	        	if(i > 2)
+					{
+						// it's only sometimes Y
+						printf("%d: '%c'\n", i, letter);
+						break;
+					}
+    	        	//break;
 
-			case 'i':
-			case 'I':
-				printf("%d: 'I'\n", i);
-				break;
-
-			case 'o':
-			case 'O':
-				printf("%d: 'O'\n", i);
-				break;
-
-			case 'u':
-            case 'U':
-            	printf("%d: 'U'\n", i);
-            	break;
-
-			case 'y':
-            case 'Y':
-            	if(i > 2)
-				{
-					// it's only sometimes Y
-					printf("%d: 'Y'\n", i);
-				}
-            	break;
-
-			default:
-				printf("%d: %c is not a vowel\n", i, letter);
+				default:
+					printf("%d: %c is not a vowel\n", i, letter);
+			}
 		}
 	}
 

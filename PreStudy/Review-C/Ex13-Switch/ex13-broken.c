@@ -14,8 +14,10 @@ int main(int argc, char *argv[])
 	{
 		char letter = argv[1][i];
 
-		switch(letter)
+		switch(letter & 0xE)
 		{
+			case (100&0xE):
+				printf("%d, is %c(%d)\n", i, letter, letter & 0xE); break;
 			case 'a':
 			case 'A':
 				printf("%d: 'A'\n", i);
@@ -39,7 +41,7 @@ int main(int argc, char *argv[])
 			case 'u':
             case 'U':
             	printf("%d: 'U'\n", i);
-            	break;
+            	//break;
 
 			case 'y':
             case 'Y':
@@ -50,7 +52,11 @@ int main(int argc, char *argv[])
 				}
             	break;
 
-			default:
+			case 100:
+				printf("Accident int num\n");
+				break;
+
+			//default:
 				printf("%d: %c is not a vowel\n", i, letter);
 		}
 	}
