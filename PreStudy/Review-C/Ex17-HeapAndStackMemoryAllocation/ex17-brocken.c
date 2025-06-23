@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <string.h>
 
-#define MAX_DATA 512
+#define MAX_DATA 10//512
 #define MAX_ROWS 100
 
 struct Address 
@@ -124,9 +124,11 @@ void Database_set(struct Connection *conn, int id, const char *name, const char 
 	char *res = strncpy(addr->name, name, MAX_DATA);
 	// demostrate the strncpy bug
 	if(!res) die("Name copy failed");
+	addr->name[MAX_DATA - 1] = '\0';
 
 	res = strncpy(addr->email, email, MAX_DATA);
 	if(!res) die("Email copy failed");
+	addr->email[MAX_DATA - 1] = '\0';
 }
 
 void Database_get(struct Connection *conn, int id)
@@ -176,7 +178,7 @@ int main(int argc, char *argv[])
 	int id = 0;
 
 	if(argc > 3) id = atoi(argv[3]);
-	if(id >= MAX_ROWS) die("There's not that many records.");
+//	if(id >= MAX_ROWS) die("There's not that many records.");
 
 	switch(action)
 	{
