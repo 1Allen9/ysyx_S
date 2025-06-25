@@ -123,27 +123,72 @@ int *simple_sort(int *num, int cnt, compare_cb cmp)
 }
 
 
-void split_arr(int *num, int start, int end)
+void merge(int *arr, int start, int mid, int end, compare_cb cmp)
 {
-	if(start > end) return;
+	int left_cnt = mid - start + 1;
+	int right_cnt = end - mid;
+
+	int *l_arr = malloc(left_cnt * sizeof(int));
+	memcpy(l_arr, &arr[start], left_cnt * sizeof(int));
+
+	int *r_arr = malloc(right_cnt * sizeof(int));
+	memcpy(r_arr, &arr[mid + 1], right_cnt * sizeof(int));
+
+	int l = 0;
+	int r = 0;
+	int idx = start;
+
+	while( (l < left_cnt) && (r < right_cnt) )
+	{
+		if( cmp(l_arr[l], r_arr[r]) > 0)
+		{
+			arr[idx++] = r_arr[r++];
+		}
+		else
+		{
+			arr[idx++] = l_arr[l++];
+		}
+	}
+
+	while(l < left_cnt)
+	{
+		arr[idx++] = l_arr[l++];
+	}
+
+	while(r < right_cnt)
+	{
+		arr[idx++] = r_arr[r++];
+	}
+	
+	free(l_arr);
+	free(r_arr);
+
+}
+
+void mg_sort(int *num, int start, int end, compare_cb cmp)
+{
+	if(start >= end) return;
 	int mid = (start + end) / 2;
 	
-	split_arr(num, start, mid);
-	split_arr(num, mid+1, end);
+
+	mg_sort(num, start, mid, cmp);
+	mg_sort(num, mid+1, end, cmp);
+
+	merge(num, start, mid, end, cmp);
+	
 
 }
 
-void merge(int *arr, int start, int mid, int end)
-{
-
-}
 
 int *merge_sort(int *num, int cnt, compare_cb cmp)
 {
 	int *target = malloc(cnt * sizeof(int));
 
-	memcpu(target, num, cnt * sizeof(int));
+	memcpy(target, num, cnt * sizeof(int));
 
+	int start = 0;
+	int end = cnt - 1;
+	mg_sort(target, start, end, cmp);
 
 
 	return target;
@@ -177,6 +222,12 @@ int main(int argc, char *argv[])
 	test_sorting(numbers, count, sorted_order, simple_sort);
 	test_sorting(numbers, count, reverse_order, simple_sort);
 	test_sorting(numbers, count, strange_order, simple_sort);
+
+	printf("merge sort\n");
+	test_sorting(numbers, count, sorted_order, merge_sort);
+	test_sorting(numbers, count, reverse_order, merge_sort);
+	test_sorting(numbers, count, strange_order, merge_sort);
+
 
 	free(numbers);
 
