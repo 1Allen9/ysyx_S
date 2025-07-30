@@ -2,11 +2,12 @@ CFLAGS = -Wall -g -I src
 
 #SRC = $(wildcard *.c src/*.c )
 SRC = $(wildcard *.c  src/*.c test/*.c)
+HEAD = $(wildcard *.h src/*.h test/*.h)
 OBJ = $(SRC:%.c=%.o)
 
 TARGET = ex32
 
-${TARGET}: ${OBJ}
+${TARGET}: ${OBJ} ${HEAD}
 	cc ${CFLAGS} $^ -o $@
 
 

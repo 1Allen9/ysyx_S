@@ -7,7 +7,11 @@ static List *list = NULL;
 char *test1 = "test1 data";
 char *test2 = "test2 data";
 char *test3 = "test3 data";
+char *test4 = "test4 data";
+char *test5 = "test5 data";
+char *test6 = "test6 data";
 
+static List *list2 = NULL;
 
 
 char *test_create()
@@ -15,19 +19,47 @@ char *test_create()
     list = List_create();
     mu_assert(list != NULL, "Failed to create list.");
 
+    //list2 = List_create();
+    //mu_assert(list2 != NULL, "Failed to create list.");
+
+	//printf("list2 addr: %p, list addr:%p\n", list2, list);
+
     return NULL;
+}
+
+char *test_list_copy()
+{
+
+	list2 = List_create();
+	//list2 = List_copy(list);
+	List_copy(list, list2);
+	ListNode *node = list2->first;//list2 first node
+
+	printf("==== list copy ====\n");
+	printf("new list addr: %p, list addr:%p\n", list2, list);
+
+	LIST_FOREACH(list, first, next, cur)
+	{
+		mu_assert(cur->value == node->value, "val err, Wrong in copy");
+		printf("list1 val: %s, list2 val: %s\n", (char*)cur->value, (char*)node->value);
+		printf("list1 add: %p, list2 add: %p\n", cur, node);
+		node = node->next;
+	}
+
+	return NULL;
 }
 
 char *test_destroy()
 {
 	List_clear_destroy(list);
-
+	//List_clear_destroy(list2);	
 	return NULL;
 }
 
 
 char *test_push_pop()
 {
+	// insert node at last
 	List_push(list, test1);
 	mu_assert(List_last(list) == test1, "Wrong last value.");
 
@@ -55,6 +87,7 @@ char *test_push_pop()
 
 char *test_unshift()
 {
+	// insert node at first
 	List_unshift(list, test1);
 	mu_assert(List_first(list) == test1, "Wrong first value. test1");
 
@@ -103,9 +136,10 @@ char *all_test()
 	mu_suite_start();
 
 	mu_run_test(test_create);
-	mu_run_test(test_push_pop);
-	mu_run_test(test_unshift);
-	mu_run_test(test_remove);
+	mu_run_test(test_push_pop);// add node @ last and pop
+	mu_run_test(test_unshift);// add node @ head
+	mu_run_test(test_list_copy);// copy
+	mu_run_test(test_remove);// 
 	mu_run_test(test_shift);
 	mu_run_test(test_destroy);
 

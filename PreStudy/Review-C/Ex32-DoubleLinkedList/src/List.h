@@ -10,6 +10,7 @@ typedef struct ListNode
 	struct ListNode *next;
 	struct ListNode *prev;
 	void *value;
+	int num;
 } ListNode;
 
 typedef struct List
@@ -20,6 +21,7 @@ typedef struct List
 } List;
 
 List *List_create();
+List *List_copy(List *list_src, List *list_des);
 void List_destroy(List *list);
 void List_clear(List *list);
 void List_clear_destroy(List *list);

@@ -6,6 +6,19 @@ List *List_create()
 	return calloc(1, sizeof(List));
 }
 
+List *List_copy(List *list_src, List *list_des)
+{
+
+	LIST_FOREACH(list_src, first, next, cur)
+	{
+		List_push(list_des, cur->value );
+
+	}
+
+	return NULL;
+
+}
+
 void List_destroy(List *list)
 {
 	LIST_FOREACH(list, first, next, cur)
@@ -34,6 +47,7 @@ void List_clear_destroy(List *list)
 	List_destroy(list);
 }
 
+// insert node at the last
 void List_push(List *list, void *value)
 {
 	ListNode *node = calloc(1, sizeof(ListNode));
@@ -59,12 +73,14 @@ error:
 	return;
 }
 
+// remove node at the last
 void *List_pop(List *list)
 {
 	ListNode *node = list->last;
 	return node != NULL ? List_remove(list, node) : NULL;
 }
 
+// insert node at the head
 void List_unshift(List *list, void *value)
 {
 	ListNode *node = calloc(1, sizeof(ListNode));
@@ -95,6 +111,7 @@ error:
 	return;
 }
 
+// remove node at the head
 void *List_shift(List *list)
 {
 	ListNode *node = list->first;
