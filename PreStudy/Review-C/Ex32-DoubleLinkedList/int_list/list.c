@@ -177,3 +177,82 @@ void Check_List_info(LinkList *list)
 	printf("list->tail val: %d\n", list->tail->num);
 	printf("list->cnt: %d\n", list->cnt);
 }
+
+/*****
+* idx count start from 0: 0=head node, list->cnt-1=tail node
+  */
+int List_rm_index(LinkList *list, int idx)
+{
+	db_chk_null(list);
+	int num;//rm val
+	if(idx < 0) {printf("idx:%d err, should > 0\n", idx); return 0;}
+
+	if(idx == 0)
+	{
+		List_rm_head(list);
+	}
+	else if(idx == list->cnt - 1)
+	{
+		List_rm_tail(list);
+	}
+	else
+	{
+		int i = 0;
+		ListNode *node = list->head;
+		while( i != idx )
+		{
+			node = node->next;
+			i++;
+		}
+		num = node->num;
+		node->prev->next = node->next;
+		node->next->prev = node->prev;
+		free(node);
+	}
+	return num;
+}
+
+/*****
+  * idx start from 0
+  */
+int List_find_index(LinkList *list, int idx)
+{
+	db_chk_null(list);
+	db_chk_lt_zero(idx);
+
+	if(idx == 0)
+	{
+		return list->head->num;
+	}
+	else if(idx == list->cnt - 1)
+	{
+		return list->tail->num;
+	}
+	else
+	{
+		int i = 0;
+		ListNode *node = list->head;
+		while( i != idx )
+		{
+			node = node->next;
+			i++;
+		}
+		return node->num;
+	}
+}
+
+LinkList *List_copy(LinkList *list)
+{
+	db_chk_null(list);
+
+	printf("==== copy a list ====\n");
+	LinkList *new_list = List_create();
+	ListNode *node = NULL;
+	for(node = list->head; node != NULL; node = node->next)
+	{
+		Insert_Node_to_Tail(new_list, node->num);
+	}
+
+	return new_list;
+}
+

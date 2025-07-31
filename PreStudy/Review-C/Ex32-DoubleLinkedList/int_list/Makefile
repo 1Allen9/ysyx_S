@@ -18,7 +18,7 @@ ${TARGET}: ${OBJ} ${HEAD}
 .PHONY: clean
 
 clean:
-	rm -f ${TARGET} ${OBJ}
+	rm -f ${TARGET} ${OBJ} *core.*
 
 print:
 	echo ${SRC}
