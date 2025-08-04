@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	/*
 	int i = 0;
 	int n;
-	for(i = 0; i < argc; i++)
+	for(i = 0; i < argc - 1; i++)
 	{
 		n = atoi(argv[i+1]);
 		printf("%d, %s\n", n, argv[i+1]);
@@ -63,8 +63,22 @@ int main(int argc, char *argv[])
 	LinkList *cp_list = List_copy(list);
 	Print_LinkList_HeadtoTail(cp_list);
 
-	List_destroy(list);
-	List_destroy(cp_list);
+	LinkList *sp_list = List_split(list, 2);
+	Check_List_info(sp_list);
+	Check_List_info(list);
+	Print_LinkList_HeadtoTail(sp_list);
+	Print_LinkList_HeadtoTail(list);
+
+	printf("[**** list connect test ****]\n");
+	LinkList *conn_list = List_connect(list, cp_list);
+	Check_List_info(conn_list);
+	Print_LinkList_TailtoHead(conn_list);
+
+
+	// List_destroy(list);
+	// List_destroy(cp_list);
+	List_destroy(sp_list);
+	List_destroy(conn_list);
 
 	return 0;
 }

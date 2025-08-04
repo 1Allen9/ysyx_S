@@ -31,6 +31,8 @@ void List_destroy(LinkList *list);
 void Check_List_info(LinkList *list);
 int List_find_index(LinkList *list, int idx);
 LinkList *List_copy(LinkList *list);
+LinkList *List_split(LinkList *list, int idx);
+LinkList *List_connect(LinkList *list1, LinkList *list2);
 
 
 #endif

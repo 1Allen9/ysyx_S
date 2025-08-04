@@ -152,6 +152,7 @@ int List_rm_head(LinkList *list)
 void List_destroy(LinkList *list)
 {
 	db_chk_null(list);
+	if(list == NULL) {return;}
 
 	ListNode *cur_node = list->head;
 	for(cur_node = list->head; cur_node != NULL; cur_node = cur_node->next)
@@ -208,6 +209,7 @@ int List_rm_index(LinkList *list, int idx)
 		node->prev->next = node->next;
 		node->next->prev = node->prev;
 		free(node);
+		list->cnt--;
 	}
 	return num;
 }
@@ -255,4 +257,73 @@ LinkList *List_copy(LinkList *list)
 
 	return new_list;
 }
+
+LinkList *List_split(LinkList *list, int idx)
+{
+	db_chk_null(list);
+	db_chk_lt_zero(idx);
+
+	printf("==== list split ====\n");
+
+	if(list->cnt <= 1)
+	{
+		printf("List can not be splited, len less than 1\n");
+		return NULL;
+	}
+
+	LinkList *list2 = List_create();
+	ListNode *node = list->head;
+
+	int i = 0;
+	while( i != idx)
+	{
+		node = node->next;
+		i++;
+	}
+	list2->head = node;
+	list2->tail = list->tail;
+	list->tail = node->prev;
+
+	list->tail->next = NULL;
+	list2->head->prev = NULL;
+
+	list2->cnt = list->cnt - idx;
+	list->cnt = idx;
+
+	return list2;
+}
+
+/*****
+  * list2 append to list1
+  */
+LinkList *List_connect(LinkList *list1, LinkList *list2)
+{
+	db_chk_null(list1);
+	db_chk_null(list2);
+	if(list1 == list2)
+	{
+		printf("Can not connect the same Linklist\n");
+		return NULL;
+	}
+
+	printf(">>>> list connect ====\n");
+
+	LinkList *list_conn = List_create();
+	list1->tail->next = list2->head;
+	list2->head->prev = list1->tail;
+	list_conn->head = list1->head;
+	list_conn->tail = list2->tail;
+	list_conn->cnt = list1->cnt + list2->cnt;
+
+	// List_destroy(list1);
+	// List_destroy(list2);
+
+	// free only LinkList, keep ListNode
+	free(list1);
+	free(list2);
+
+
+	return list_conn;
+}
+
 
